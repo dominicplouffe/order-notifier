@@ -1,0 +1,15 @@
+{
+  "name": "order-notifier",
+  "version": "0.1.0",
+  "description": "A toy order-notification service. Companion repo for the Claude Code guide at dplouffe.ca/guides/.",
+  "type": "module",
+  "private": true,
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

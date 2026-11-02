@@ -1,0 +1,8 @@
+{
+  "port": 3000,
+  "currency": "USD",
+  "emailFrom": "orders@example.test",
+  "emailEndpoint": "http://127.0.0.1:4000/send",
+  "apiToken": null,
+  "maxOrderCents": 100000
+}
