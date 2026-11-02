@@ -22,7 +22,15 @@ export function createApp(config, deps = {}) {
   const seen = new Set();
 
   return async function handler(req, res) {
-    const url = new URL(req.url, 'http://localhost');
+    // A request target such as `//` is not a valid URL and makes `new URL`
+    // throw. In an async handler that would be an unhandled rejection, and
+    // Node ends the process on one. Answer 400 instead and keep serving.
+    let url;
+    try {
+      url = new URL(req.url, 'http://localhost');
+    } catch {
+      return send(res, 400, { error: 'bad request target' });
+    }
 
     if (req.method === 'GET' && url.pathname === '/health') {
       return send(res, 200, { ok: true, env: config.env });

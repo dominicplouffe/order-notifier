@@ -42,6 +42,7 @@ test/            node:test files; the email sender is faked, so no sockets in te
 |--------|------|---------|
 | GET | `/health` | `200` with `{"ok":true,"env":"<env>"}` |
 | POST | `/orders` | `201` with `{"id","notified":true}`; `200` with `"duplicate":true` if the same id is posted again; `400` for a body that is not JSON; `422` for an order that fails validation; `502` if the notification cannot be sent (nothing is marked sent, so a retry tries again) |
+| any | a request target that is not a valid URL, such as `//` | `400` with `{"error":"bad request target"}` |
 | any | anything else | `404` with `{"error":"not found"}` |
 
 ## Configuration
@@ -61,7 +62,7 @@ Secrets belong in `.env` (git-ignored) or your shell, never in `config/`. `.env.
 npm test
 ```
 
-`node --test` runs everything named `*.test.js` under `test/`. (On Node 22, `node --test test/` treats the argument as a module path and fails with "Cannot find module". Leave the argument off.) The suite covers order validation, amount formatting, the notification, every route including the duplicate, 400, 404, 422 and 502 paths, and config precedence. It never opens a socket to the email endpoint: the sender is replaced with a fake.
+`node --test` runs everything named `*.test.js` under `test/`. (On Node 22, `node --test test/` treats the argument as a module path and fails with "Cannot find module". Leave the argument off.) The suite covers order validation (including an order of exactly the limit and one cent over it), amount formatting, the notification, the email sender and its `Authorization` header, every route including the duplicate, 400, 404, 422 and 502 paths, a retry after a 502, a request target like `//`, and config precedence. It never opens a socket to the email endpoint: the sender is replaced with a fake.
 
 ## CI
 
