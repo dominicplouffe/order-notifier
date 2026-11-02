@@ -61,7 +61,7 @@ Secrets belong in `.env` (git-ignored) or your shell, never in `config/`. `.env.
 npm test
 ```
 
-`node --test` runs everything named `*.test.js` under `test/`. The suite covers order validation, amount formatting, the notification, every route including the duplicate, 400, 404, 422 and 502 paths, and config precedence. It never opens a socket to the email endpoint: the sender is replaced with a fake.
+`node --test` runs everything named `*.test.js` under `test/`. (On Node 22, `node --test test/` treats the argument as a module path and fails with "Cannot find module". Leave the argument off.) The suite covers order validation, amount formatting, the notification, every route including the duplicate, 400, 404, 422 and 502 paths, and config precedence. It never opens a socket to the email endpoint: the sender is replaced with a fake.
 
 ## CI
 
