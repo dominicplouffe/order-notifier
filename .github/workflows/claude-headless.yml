@@ -1,0 +1,41 @@
+name: claude-headless
+
+on:
+  push:
+    branches: [doc-7-work]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: claude-headless-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code@2.1.316
+      - name: Review the last commit
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude --version
+          set +e
+          scripts/review-diff.sh HEAD~1 --bare
+          code=$?
+          echo "review-diff.sh exit code: $code"
+          if [ -f review.json ]; then
+            { echo '### Claude review'; jq -r '.structured_output.problems[]? | "- \(.file): \(.problem)"' review.json; echo; jq -r '"cost $\(.total_cost_usd), \(.num_turns) turns"' review.json; } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          # 0 = nothing found, 2 = findings: both are a finished review. 1 = the run failed.
+          test "$code" -ne 1

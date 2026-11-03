@@ -12,3 +12,7 @@ coverage/
 
 # MCP server: queue_notification appends here
 outbox.jsonl
+
+.venv/
+
+review.json
