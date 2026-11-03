@@ -1,0 +1,26 @@
+name: claude-action
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: claude-action-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: "Read README.md and write a two-sentence summary of what this repository does."
+          claude_args: "--model haiku --max-turns 3 --max-budget-usd 0.25 --allowedTools Read"
