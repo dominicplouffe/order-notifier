@@ -6,3 +6,6 @@ coverage/
 
 # Claude Code: personal overrides stay out of git
 .claude/settings.local.json
+
+# Claude Code: subagent worktrees stay out of git
+.claude/worktrees/

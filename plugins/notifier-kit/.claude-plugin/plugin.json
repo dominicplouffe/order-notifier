@@ -1,0 +1,8 @@
+{
+  "name": "notifier-kit",
+  "description": "A changelog skill, a test-triage subagent and a session log for order-notifier",
+  "version": "1.0.0",
+  "author": {
+    "name": "Practice Reader"
+  }
+}

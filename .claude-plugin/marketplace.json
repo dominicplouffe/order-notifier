@@ -1,0 +1,14 @@
+{
+  "name": "notifier-tools",
+  "description": "Plugins for the order-notifier team",
+  "owner": {
+    "name": "Practice Reader"
+  },
+  "plugins": [
+    {
+      "name": "notifier-kit",
+      "source": "./plugins/notifier-kit",
+      "description": "A changelog skill, a test-triage subagent and a session log"
+    }
+  ]
+}
