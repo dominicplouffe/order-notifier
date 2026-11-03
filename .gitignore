@@ -9,3 +9,6 @@ coverage/
 
 # Claude Code: subagent worktrees stay out of git
 .claude/worktrees/
+
+# MCP server: queue_notification appends here
+outbox.jsonl

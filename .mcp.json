@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "orders": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "mcp/orders-stdio.mjs"
+      ],
+      "env": {}
+    }
+  }
+}
