@@ -3,3 +3,6 @@ node_modules/
 *.log
 coverage/
 .DS_Store
+
+# Claude Code: personal overrides stay out of git
+.claude/settings.local.json
